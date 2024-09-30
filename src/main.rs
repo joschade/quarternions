@@ -33,8 +33,27 @@ impl Quarternion {
             k: - self.k,
         }
     }
+
     fn abs(&self) -> f64 {
         self.mult(self.conj()).real
+    }
+
+    fn id() -> Quarternion {
+        Quarternion {
+            real: 1.0,
+            i: 0.0,
+            j: 0.0,
+            k: 0.0,
+        }
+    }
+
+    fn zero() -> Quarternion {
+        Quarternion {
+            real: 0.0,
+            i: 0.0,
+            j: 0.0,
+            k: 0.0,
+        }
     }
 
 }
@@ -55,5 +74,5 @@ fn main() {
     };
 
 
-    println!("{:?}", q.abs())
+    println!("{:?}", Quarternion::zero())
 }
