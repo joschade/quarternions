@@ -38,8 +38,12 @@ impl Quarternion {
         self.mult(&q.conj()).real
     }
 
+    pub fn norm(&self) -> f64 {
+        self.dot(self)
+    }
+
     pub fn abs(&self) -> f64 {
-        self.dot(self).sqrt()
+        self.norm().sqrt()
     }
 
     pub fn id() -> Quarternion {
@@ -58,5 +62,20 @@ impl Quarternion {
             j: 0.0,
             k: 0.0,
         }
+    }
+
+    pub fn div_byreal(&self, x: f64) -> Quarternion {
+        Quarternion {
+            real: self.real/x,
+            i: self.i/x,
+            j: self.j/x,
+            k: self.k/x,
+        }
+    }
+
+    pub fn inv(&self) -> Quarternion {
+        let norm = self.norm();
+
+        self.div_byreal(norm)
     }
 }
