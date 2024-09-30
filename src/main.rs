@@ -1,4 +1,4 @@
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct Quarternion {
     real: f64,
     i: f64,
@@ -39,7 +39,7 @@ impl Quarternion {
     }
 
     fn abs(&self) -> f64 {
-        self.mult(self.conj()).real
+        self.dot(self.clone())
     }
 
     fn id() -> Quarternion {
@@ -77,5 +77,5 @@ fn main() {
     };
 
 
-    println!("{:?}", p.dot(q))
+    println!("{:?}", p.abs())
 }
