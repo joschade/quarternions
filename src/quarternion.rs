@@ -18,7 +18,7 @@ impl Quarternion {
 
     pub fn mult(&self, q: &Quarternion) -> Quarternion {
         Quarternion {
-            real: self.real * q.real - self.i * q.i - self.j * q.j -self.k * q.k,
+            real: self.real * q.real - self.i * q.i - self.j * q.j - self.k * q.k,
             i: self.real * q.i + self.i * q.real + self.j * q.k - self.k * q.j,
             j: self.real * q.j + self.j * q.real + self.k * q.i - self.i * q.k,
             k: self.real * q.k + self.k * q.real + self.i + q.j - self.j * q.i,
@@ -76,6 +76,7 @@ impl Quarternion {
     pub fn inv(&self) -> Quarternion {
         let norm = self.norm();
 
-        self.div_byreal(norm)
+        self.conj().div_byreal(norm)
     }
+
 }
