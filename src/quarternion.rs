@@ -7,6 +7,15 @@ pub struct Quarternion {
 }
 
 impl Quarternion {
+    pub fn new(w: f64, x:f64, y:f64, z:f64) -> Quarternion {
+        Quarternion {
+            real: w,
+            i: x,
+            j: y,
+            k: z
+        }
+    }
+    
     pub fn add(&self, q: &Quarternion) -> Quarternion {
         Quarternion {
             real: self.real + q.real,
