@@ -34,6 +34,10 @@ impl Quarternion {
         }
     }
 
+    fn dot(&self, q: Quarternion) -> f64 {
+        self.mult(q.conj()).real
+    }
+
     fn abs(&self) -> f64 {
         self.mult(self.conj()).real
     }
@@ -55,7 +59,6 @@ impl Quarternion {
             k: 0.0,
         }
     }
-
 }
 
 fn main() {
@@ -74,5 +77,5 @@ fn main() {
     };
 
 
-    println!("{:?}", Quarternion::zero())
+    println!("{:?}", p.dot(q))
 }
