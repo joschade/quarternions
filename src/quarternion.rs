@@ -95,6 +95,10 @@ impl Quarternion {
         Quarternion::div_by_scalar(&self.conj(), norm)
     }
 
+    pub fn normalize(&self) -> Quarternion {
+        self.div_by_scalar(self.abs())
+        }
+
 }
 
 impl fmt::Display for Quarternion {
