@@ -1,3 +1,10 @@
+use std::fmt;
+
+fn sgn(x: f64) -> char {
+    if x.signum() < 0. {'-'}
+    else {'+'}
+}
+
 #[derive(Debug, Clone)]
 pub struct Quarternion {
     pub real: f64,
@@ -88,4 +95,11 @@ impl Quarternion {
         Quarternion::div_by_scalar(&self.conj(), norm)
     }
 
+}
+
+impl fmt::Display for Quarternion {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        // Use `self.number` to refer to each positional data point.
+        write!(f, "{}{}{}i{}{}j{}{}k", self.real, sgn(self.i), self.i.abs(),sgn(self.i), self.j.abs(), sgn(self.k), self.k.abs())
+    }
 }
