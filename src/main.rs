@@ -20,7 +20,12 @@ fn main() {
     println!("{:?}", p.mult(&q));
     println!("{:?}", p.dot(&q));
     println!("{:?}", p.abs());
+    println!("{:?}", p.norm());
     println!("{:?}", p.conj());
     println!("{:?}", Quarternion::id());
     println!("{:?}", Quarternion::zero());
+    println!("{:?}", q.div_byreal(4.0));
+    println!("{:?}", q.inv());
+    println!("{:?}", p.mult(&(q.inv())));
+
 }
