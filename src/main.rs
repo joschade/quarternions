@@ -22,8 +22,13 @@ impl Quarternion {
             i: self.real * q.i + self.i * q.real + self.j * q.k - self.k * q.j,
             j: self.real * q.j + self.j * q.real + self.k * q.i - self.i * q.k,
             k: self.real * q.k + self.k * q.real + self.i + q.j - self.j * q.i,
-        }
     }
+    }
+
+    fn conj(&self) -> f64 {
+        self.real - self.i - self.j -self.k
+    }
+
 }
 
 fn main() {
@@ -42,5 +47,5 @@ fn main() {
     };
 
 
-    println!("{:?}", q.mult(p))
+    println!("{:?}", q.conj())
 }
