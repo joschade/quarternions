@@ -39,7 +39,7 @@ impl Quarternion {
     }
 
     pub fn abs(&self) -> f64 {
-        self.dot(self)
+        self.dot(self).sqrt()
     }
 
     pub fn id() -> Quarternion {
