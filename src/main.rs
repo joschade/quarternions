@@ -18,7 +18,7 @@ fn main() {
 
     println!("{:?}", p.add(&q));
     println!("{:?}", p.mult(&q));
-
+    println!("{:?}", p.dot(&q));
     println!("{:?}", p.abs());
     println!("{:?}", p.conj());
     println!("{:?}", Quarternion::id());
