@@ -21,7 +21,7 @@ impl Quarternion {
             real: self.real * q.real - self.i * q.i - self.j * q.j - self.k * q.k,
             i: self.real * q.i + self.i * q.real + self.j * q.k - self.k * q.j,
             j: self.real * q.j + self.j * q.real + self.k * q.i - self.i * q.k,
-            k: self.real * q.k + self.k * q.real + self.i + q.j - self.j * q.i,
+            k: self.real * q.k + self.k * q.real + self.i * q.j - self.j * q.i,
     }
     }
 
@@ -64,7 +64,7 @@ impl Quarternion {
         }
     }
 
-    pub fn div_byreal(&self, x: f64) -> Quarternion {
+    pub fn div_by_scalar(&self, x: f64) -> Quarternion {
         Quarternion {
             real: self.real/x,
             i: self.i/x,
@@ -76,7 +76,7 @@ impl Quarternion {
     pub fn inv(&self) -> Quarternion {
         let norm = self.norm();
 
-        self.conj().div_byreal(norm)
+        Quarternion::div_by_scalar(&self.conj(), norm)
     }
 
 }
