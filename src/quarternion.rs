@@ -5,7 +5,7 @@ fn sgn(x: f64) -> char {
     else {'+'}
 }
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct Quarternion {
     pub real: f64,
     pub i: f64,
