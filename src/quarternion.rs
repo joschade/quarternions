@@ -1,10 +1,5 @@
 use std::fmt;
 
-fn sgn(x: f64) -> char {
-    if x.signum() < 0. {'-'}
-    else {'+'}
-}
-
 #[derive(Clone)]
 pub struct Quarternion {
     pub real: f64,
@@ -102,10 +97,15 @@ impl Quarternion {
 
 }
 
+// helper for fmt::Display
+fn sgn(x: f64) -> char {
+    if x.signum() < 0. {'-'}
+    else {'+'}
+}
+
 // format instruction for print macro
 impl fmt::Display for Quarternion {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        // Use `self.number` to refer to each positional data point.
         write!(f, "{}{}{}i{}{}j{}{}k", self.real, sgn(self.i), self.i.abs(),sgn(self.i), self.j.abs(), sgn(self.k), self.k.abs())
     }
 }
