@@ -54,11 +54,12 @@ impl Quarternion {
         self.mult(&q.conj()).real
     }
 
+    // norm in this context means squared length
     pub fn norm(&self) -> f64 {
         self.dot(self)
     }
 
-    pub fn abs(&self) -> f64 {
+    pub fn len(&self) -> f64 {
         self.norm().sqrt()
     }
 
@@ -80,27 +81,28 @@ impl Quarternion {
         }
     }
 
-    pub fn div_by_scalar(&self, x: f64) -> Quarternion {
+    pub fn scalar_mult(&self, x: f64) -> Quarternion {
         Quarternion {
-            real: self.real/x,
-            i: self.i/x,
-            j: self.j/x,
-            k: self.k/x,
+            real: self.real*x,
+            i: self.i*x,
+            j: self.j*x,
+            k: self.k*x,
         }
     }
 
     pub fn inv(&self) -> Quarternion {
         let norm = self.norm();
 
-        Quarternion::div_by_scalar(&self.conj(), norm)
+        Quarternion::scalar_mult(&self.conj(), 1./norm)
     }
 
     pub fn normalize(&self) -> Quarternion {
-        self.div_by_scalar(self.abs())
+        self.scalar_mult(self.len())
         }
 
 }
 
+// format instruction for print macro
 impl fmt::Display for Quarternion {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         // Use `self.number` to refer to each positional data point.
