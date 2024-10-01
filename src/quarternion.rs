@@ -92,7 +92,7 @@ impl Quarternion {
     }
 
     pub fn normalize(&self) -> Quarternion {
-        self.scalar_mult(self.len())
+        self.scalar_mult(1./self.len())
         }
 
 }
