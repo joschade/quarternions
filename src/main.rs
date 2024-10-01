@@ -16,16 +16,21 @@ fn main() {
         k: 4.8,
     };
 
-    println!("{:?}", p.add(&q));
-    println!("{:?}", p.mult(&q));
-    println!("{:?}", p.dot(&q));
-    println!("{:?}", p.abs());
-    println!("{:?}", p.norm());
-    println!("{:?}", p.conj());
-    println!("{:?}", Quarternion::id());
-    println!("{:?}", Quarternion::zero());
-    println!("{:?}", q.div_byreal(4.0));
-    println!("{:?}", q.inv());
-    println!("{:?}", p.mult(&(q.inv())));
+    println!("{}", p.add(&q));
+    println!("{}", p.mult(&q));
+    println!("{}", p.dot(&q));
+    println!("{}", p.len());
+    println!("{}", p.norm());
+    println!("should yield 2: {}", q.add(&q.conj()));
+    println!("should yield 1: {}", Quarternion::id());
+    println!("should yield 0: {}", Quarternion::zero());
+    println!("{}", q.scalar_mult(4.0));
+    println!("{}", q.inv());
+    println!("should yield 1: {:}", q.mult(&(q.inv())));
 
+    let r = Quarternion::new(2.0, 0.0, -7., 3.0);
+
+    println!("{}", r.mult(&(r.conj())));
+    println!("{}", r.conj().mult(&r));
+    println!{"{}", r.conj().normalize()}
 }
