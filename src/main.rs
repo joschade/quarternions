@@ -16,9 +16,10 @@ fn main() {
         k: 4.8,
     };
 
-    println!("{}", p.add(&q));
-    println!("{}", p.mult(&q));
-    println!("{}", p.dot(&q));
+    println!("{}", p.clone()+q.clone());
+    println!("{}", p.clone()-q.clone());
+    println!("{}", p.clone()*q.clone());
+    println!("{}", p.clone()/q.clone());
     println!("{}", p.len());
     println!("{}", p.norm());
     println!("should yield 2: {}", q.add(&q.conj()));
@@ -33,5 +34,7 @@ fn main() {
     println!("{}", r.mult(&(r.conj())));
     println!("{}", r.conj().mult(&r));
     println!{"{}", r.conj().normalize()}
-    println!{"{:?}", r.conj().get_array()}
+    println!{"{:?}", r.conj().normalize().get_array()}
+    print!("{}", -r.clone());
+
 }

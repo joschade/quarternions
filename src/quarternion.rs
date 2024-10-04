@@ -1,4 +1,5 @@
 use std::fmt;
+use std::ops::{Add, Sub, Mul, Div, Neg};
 
 #[derive(Clone)]
 pub struct Quarternion {
@@ -6,6 +7,52 @@ pub struct Quarternion {
     pub i: f64,
     pub j: f64,
     pub k: f64,
+}
+
+impl Add for Quarternion {
+    type Output = Self;
+
+    fn add(self, other: Self) -> Self {
+        Self {real: self.real + other.real
+            , i: self.i + other.i
+            , j: self.j + other.j
+            , k: self.k + other.k}
+    }
+}
+
+impl Sub for Quarternion {
+    type Output = Self;
+
+    fn sub(self, other: Self) -> Self {
+        Self {real: self.real - other.real
+            , i: self.i - other.i
+            , j: self.j - other.j
+            , k: self.k - other.k}
+    }
+}
+
+impl Mul for Quarternion {
+    type Output = Self;
+
+    fn mul(self, other: Self) -> Self {
+        Self {
+            real: self.real * other.real - self.i * other.i - self.j * other.j - self.k * other.k,
+            i: self.real * other.i + self.i * other.real + self.j * other.k - self.k * other.j,
+            j: self.real * other.j + self.j * other.real + self.k * other.i - self.i * other.k,
+            k: self.real * other.k + self.k * other.real + self.i * other.j - self.j * other.i,
+        }
+    }
+}
+
+impl Neg for Quarternion {
+    type Output = Self;
+
+    fn neg(self) -> Self {
+        Self {real: - self.real
+            , i: - self.i
+            , j: - self.j
+            , k: - self.k }
+    }
 }
 
 impl Quarternion {
@@ -18,21 +65,21 @@ impl Quarternion {
         }
     }
     
-    pub fn add(&self, q: &Quarternion) -> Quarternion {
+    pub fn add(&self, other: &Quarternion) -> Quarternion {
         Quarternion {
-            real: self.real + q.real,
-            i: self.i + q.i,
-            j: self.j + q.j,
-            k : self.k + q.k,
+            real: self.real + other.real,
+            i: self.i + other.i,
+            j: self.j + other.j,
+            k : self.k + other.k,
         }
     }
 
-    pub fn mult(&self, q: &Quarternion) -> Quarternion {
+    pub fn mult(&self, other: &Quarternion) -> Quarternion {
         Quarternion {
-            real: self.real * q.real - self.i * q.i - self.j * q.j - self.k * q.k,
-            i: self.real * q.i + self.i * q.real + self.j * q.k - self.k * q.j,
-            j: self.real * q.j + self.j * q.real + self.k * q.i - self.i * q.k,
-            k: self.real * q.k + self.k * q.real + self.i * q.j - self.j * q.i,
+            real: self.real * other.real - self.i * other.i - self.j * other.j - self.k * other.k,
+            i: self.real * other.i + self.i * other.real + self.j * other.k - self.k * other.j,
+            j: self.real * other.j + self.j * other.real + self.k * other.i - self.i * other.k,
+            k: self.real * other.k + self.k * other.real + self.i * other.j - self.j * other.i,
     }
     }
 
@@ -45,8 +92,9 @@ impl Quarternion {
         }
     }
 
-    pub fn dot(&self, q: &Quarternion) -> f64 {
-        self.mult(&q.conj()).real
+    pub fn dot(&self, other: &Quarternion) -> f64 {
+        self.mult(&other.conj()).real
+
     }
 
     // norm in this context means squared length
@@ -98,7 +146,14 @@ impl Quarternion {
     pub fn get_array(&self) -> [f64; 4] {
         [self.real, self.i, self.j, self.k]
     }
+}
 
+impl Div for Quarternion {
+    type Output = Self;
+
+    fn div(self, other: Self) -> Self {
+        self * other.inv()
+    }
 }
 
 // helper for fmt::Display
