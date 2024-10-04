@@ -62,7 +62,7 @@ impl Quarternion {
         }
     }
 
-    pub fn conj(&self) -> Quarternion {
+    pub fn conj(self) -> Quarternion {
         Quarternion {
             real: self.real,
             i: - self.i,
