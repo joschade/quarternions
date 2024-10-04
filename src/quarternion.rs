@@ -20,14 +20,22 @@ impl Add for Quarternion {
     }
 }
 
+impl Neg for Quarternion {
+    type Output = Self;
+
+    fn neg(self) -> Self {
+        Self {real: - self.real
+            , i: - self.i
+            , j: - self.j
+            , k: - self.k }
+    }
+}
+
 impl Sub for Quarternion {
     type Output = Self;
 
     fn sub(self, other: Self) -> Self {
-        Self {real: self.real - other.real
-            , i: self.i - other.i
-            , j: self.j - other.j
-            , k: self.k - other.k}
+        self + (-other)
     }
 }
 
@@ -44,17 +52,6 @@ impl Mul for Quarternion {
     }
 }
 
-impl Neg for Quarternion {
-    type Output = Self;
-
-    fn neg(self) -> Self {
-        Self {real: - self.real
-            , i: - self.i
-            , j: - self.j
-            , k: - self.k }
-    }
-}
-
 impl Quarternion {
     pub fn new(w: f64, x:f64, y:f64, z:f64) -> Quarternion {
         Quarternion {
@@ -63,24 +60,6 @@ impl Quarternion {
             j: y,
             k: z
         }
-    }
-    
-    pub fn add(&self, other: &Quarternion) -> Quarternion {
-        Quarternion {
-            real: self.real + other.real,
-            i: self.i + other.i,
-            j: self.j + other.j,
-            k : self.k + other.k,
-        }
-    }
-
-    pub fn mult(&self, other: &Quarternion) -> Quarternion {
-        Quarternion {
-            real: self.real * other.real - self.i * other.i - self.j * other.j - self.k * other.k,
-            i: self.real * other.i + self.i * other.real + self.j * other.k - self.k * other.j,
-            j: self.real * other.j + self.j * other.real + self.k * other.i - self.i * other.k,
-            k: self.real * other.k + self.k * other.real + self.i * other.j - self.j * other.i,
-    }
     }
 
     pub fn conj(&self) -> Quarternion {
@@ -92,18 +71,18 @@ impl Quarternion {
         }
     }
 
-    pub fn dot(&self, other: &Quarternion) -> f64 {
-        self.mult(&other.conj()).real
+    pub fn dot(self, other: Quarternion) -> f64 {
+        (self * other.conj()).real
 
     }
 
     // norm in this context means squared length
-    pub fn norm(&self) -> f64 {
-        self.dot(self)
+    pub fn norm(self) -> f64 {
+        self.clone().dot(self.clone())
     }
 
     pub fn len(&self) -> f64 {
-        self.norm().sqrt()
+        self.clone().norm().sqrt()
     }
 
     pub fn id() -> Quarternion {
@@ -124,7 +103,7 @@ impl Quarternion {
         }
     }
 
-    pub fn scalar_mult(&self, x: f64) -> Quarternion {
+    pub fn scalar_mult(self, x: f64) -> Quarternion {
         Quarternion {
             real: self.real*x,
             i: self.i*x,
@@ -133,14 +112,14 @@ impl Quarternion {
         }
     }
 
-    pub fn inv(&self) -> Quarternion {
-        let norm = self.norm();
+    pub fn inv(self) -> Quarternion {
+        let norm = self.clone().norm();
 
-        Quarternion::scalar_mult(&self.conj(), 1./norm)
+        Quarternion::scalar_mult(self.conj(), 1./norm)
     }
 
-    pub fn normalize(&self) -> Quarternion {
-        self.scalar_mult(1./self.len())
+    pub fn normalize(self) -> Quarternion {
+        self.clone().scalar_mult(1./self.len())
         }
 
     pub fn get_array(&self) -> [f64; 4] {

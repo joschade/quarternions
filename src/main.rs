@@ -20,21 +20,17 @@ fn main() {
     println!("{}", p.clone()-q.clone());
     println!("{}", p.clone()*q.clone());
     println!("{}", p.clone()/q.clone());
-    println!("{}", p.len());
-    println!("{}", p.norm());
-    println!("should yield 2: {}", q.add(&q.conj()));
+    println!("{}", p.clone().len());
+    println!("{}", p.clone().norm());
+    println!("{}", p.clone().dot(p.clone()));
     println!("should yield 1: {}", Quarternion::id());
     println!("should yield 0: {}", Quarternion::zero());
-    println!("{}", q.scalar_mult(4.0));
-    println!("{}", q.inv());
-    println!("should yield 1: {:}", q.mult(&(q.inv())));
+    println!("{}", q.clone().scalar_mult(4.0));
+    println!("{}", q.clone().inv());
 
     let r = Quarternion::new(2.0, 0.0, -7., 3.0);
 
-    println!("{}", r.mult(&(r.conj())));
-    println!("{}", r.conj().mult(&r));
     println!{"{}", r.conj().normalize()}
     println!{"{:?}", r.conj().normalize().get_array()}
-    print!("{}", -r.clone());
 
 }
