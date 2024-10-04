@@ -95,6 +95,10 @@ impl Quarternion {
         self.scalar_mult(1./self.len())
         }
 
+    pub fn get_array(&self) -> [f64; 4] {
+        [self.real, self.i, self.j, self.k]
+    }
+
 }
 
 // helper for fmt::Display

@@ -33,4 +33,5 @@ fn main() {
     println!("{}", r.mult(&(r.conj())));
     println!("{}", r.conj().mult(&r));
     println!{"{}", r.conj().normalize()}
+    println!{"{:?}", r.conj().get_array()}
 }
