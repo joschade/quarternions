@@ -13,10 +13,15 @@ impl Add for Quarternion {
     type Output = Self;
 
     fn add(self, other: Self) -> Self {
-        Self {real: self.real + other.real
-            , i: self.i + other.i
-            , j: self.j + other.j
-            , k: self.k + other.k}
+        Self {
+            real: self.real + other.real
+            ,
+            i: self.i + other.i
+            ,
+            j: self.j + other.j
+            ,
+            k: self.k + other.k,
+        }
     }
 }
 
@@ -24,10 +29,15 @@ impl Neg for Quarternion {
     type Output = Self;
 
     fn neg(self) -> Self {
-        Self {real: - self.real
-            , i: - self.i
-            , j: - self.j
-            , k: - self.k }
+        Self {
+            real: -self.real
+            ,
+            i: -self.i
+            ,
+            j: -self.j
+            ,
+            k: -self.k,
+        }
     }
 }
 
@@ -52,28 +62,35 @@ impl Mul for Quarternion {
     }
 }
 
+impl Div for Quarternion {
+    type Output = Self;
+
+    fn div(self, other: Self) -> Self {
+        self * other.inv()
+    }
+}
+
 impl Quarternion {
-    pub fn new(w: f64, x:f64, y:f64, z:f64) -> Quarternion {
+    pub fn new(w: f64, x: f64, y: f64, z: f64) -> Quarternion {
         Quarternion {
             real: w,
             i: x,
             j: y,
-            k: z
+            k: z,
         }
     }
 
     pub fn conj(self) -> Quarternion {
         Quarternion {
             real: self.real,
-            i: - self.i,
-            j: - self.j,
-            k: - self.k,
+            i: -self.i,
+            j: -self.j,
+            k: -self.k,
         }
     }
 
     pub fn dot(self, other: Quarternion) -> f64 {
         (self * other.conj()).real
-
     }
 
     // norm in this context means squared length
@@ -105,45 +122,61 @@ impl Quarternion {
 
     pub fn scalar_mult(self, x: f64) -> Quarternion {
         Quarternion {
-            real: self.real*x,
-            i: self.i*x,
-            j: self.j*x,
-            k: self.k*x,
+            real: self.real * x,
+            i: self.i * x,
+            j: self.j * x,
+            k: self.k * x,
         }
     }
 
     pub fn inv(self) -> Quarternion {
         let norm = self.clone().norm();
 
-        Quarternion::scalar_mult(self.conj(), 1./norm)
+        Quarternion::scalar_mult(self.conj(), 1. / norm)
     }
 
     pub fn normalize(self) -> Quarternion {
-        self.clone().scalar_mult(1./self.len())
-        }
+        self.clone().scalar_mult(1. / self.len())
+    }
 
     pub fn get_array(&self) -> [f64; 4] {
         [self.real, self.i, self.j, self.k]
     }
-}
 
-impl Div for Quarternion {
-    type Output = Self;
+    pub fn is_unit(&self) -> bool {
+        if(self.len() != 1.0) {return false;}
+        else { true }
+    }
+    pub fn get_eulerrad(&self) -> [f64; 3] {
 
-    fn div(self, other: Self) -> Self {
-        self * other.inv()
+    //returns Euler angles in radians. Only use with unit quarternions!
+
+        [(2. * (self.real * self.i + self.j * self.k)).atan2(1. - 2. * (self.real.powi(2) + self.j.powi(2))),
+            (2. * (self.real * self.j - self.i * self.k)).asin(),
+            (2. * (self.real * self.j + self.i * self.k)).atan2(1. - 2. * (self.k.powi(2) + self.j.powi(2))),
+        ]
+    }
+
+    pub fn get_eulerdeg(&self) -> [f64; 3] {
+
+        //returns Euler angles in degrees. Only use with unit quarternions!
+        let rads = self.get_eulerrad();
+        let mut degs: [f64; 3] = [0., 0., 0.];
+        for i in 0..3 {
+            degs[i] = rads[i]*360./std::f64::consts::PI
+        };
+        degs
     }
 }
 
 // helper for fmt::Display
 fn sgn(x: f64) -> char {
-    if x.signum() < 0. {'-'}
-    else {'+'}
+    if x.signum() < 0. { '-' } else { '+' }
 }
 
 // format instruction for print macro
 impl fmt::Display for Quarternion {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}{}{}i{}{}j{}{}k", self.real, sgn(self.i), self.i.abs(),sgn(self.i), self.j.abs(), sgn(self.k), self.k.abs())
+        write!(f, "{}{}{}i{}{}j{}{}k", self.real, sgn(self.i), self.i.abs(), sgn(self.i), self.j.abs(), sgn(self.k), self.k.abs())
     }
 }

@@ -30,7 +30,12 @@ fn main() {
 
     let r = Quarternion::new(2.0, 0.0, -7., 3.0);
 
-    println!{"{}", r.conj().normalize()}
-    println!{"{:?}", r.conj().normalize().get_array()}
+    println!{"{}", r.clone().conj().normalize()}
+    println!{"{:?}", r.clone().conj().normalize().get_array()}
+    println!{"{:?}", r.clone().conj().normalize().get_eulerrad()}
+    println!{"{:?}", r.clone().is_unit()}
+    println!{"{:?}", r.clone().normalize().get_eulerdeg()}
+
+
 
 }
