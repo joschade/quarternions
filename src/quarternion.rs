@@ -165,7 +165,7 @@ impl Quarternion {
         let rads = self.get_eulerrad();
         let mut degs: [f64; 3] = [0., 0., 0.];
         for i in 0..3 {
-            degs[i] = rads[i] * 360. / std::f64::consts::PI
+            degs[i] = rads[i] * 360. * std::f64::consts::FRAC_1_PI
         }
         degs
     }
