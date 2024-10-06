@@ -1,5 +1,5 @@
 use std::fmt;
-use std::ops::{Add, Sub, Mul, Div, Neg};
+use std::ops::{Add, Div, Mul, Neg, Sub};
 
 #[derive(Clone)]
 pub struct Quarternion {
@@ -14,12 +14,9 @@ impl Add for Quarternion {
 
     fn add(self, other: Self) -> Self {
         Self {
-            real: self.real + other.real
-            ,
-            i: self.i + other.i
-            ,
-            j: self.j + other.j
-            ,
+            real: self.real + other.real,
+            i: self.i + other.i,
+            j: self.j + other.j,
             k: self.k + other.k,
         }
     }
@@ -30,12 +27,9 @@ impl Neg for Quarternion {
 
     fn neg(self) -> Self {
         Self {
-            real: -self.real
-            ,
-            i: -self.i
-            ,
-            j: -self.j
-            ,
+            real: -self.real,
+            i: -self.i,
+            j: -self.j,
             k: -self.k,
         }
     }
@@ -144,39 +138,61 @@ impl Quarternion {
     }
 
     pub fn is_unit(&self) -> bool {
-        if(self.len() != 1.0) {return false;}
-        else { true }
+        if (self.len() != 1.0) {
+            return false;
+        } else {
+            true
+        }
     }
     pub fn get_eulerrad(&self) -> [f64; 3] {
+        //returns Euler angles in radians. Only use with unit quarternions!
 
-    //returns Euler angles in radians. Only use with unit quarternions!
-
-        [(2. * (self.real * self.i + self.j * self.k)).atan2(1. - 2. * (self.real.powi(2) + self.j.powi(2))),
+        if self.is_unit() {} else {
+            println!("WARNING: Make sure that a unit quarternion is used to compute angles. \
+            Length should be 1, is {}.", self.len())
+        }
+        [
+            (2. * (self.real * self.i + self.j * self.k))
+                .atan2(1. - 2. * (self.real.powi(2) + self.j.powi(2))),
             (2. * (self.real * self.j - self.i * self.k)).asin(),
-            (2. * (self.real * self.j + self.i * self.k)).atan2(1. - 2. * (self.k.powi(2) + self.j.powi(2))),
+            (2. * (self.real * self.j + self.i * self.k))
+                .atan2(1. - 2. * (self.k.powi(2) + self.j.powi(2))),
         ]
     }
 
     pub fn get_eulerdeg(&self) -> [f64; 3] {
-
         //returns Euler angles in degrees. Only use with unit quarternions!
         let rads = self.get_eulerrad();
         let mut degs: [f64; 3] = [0., 0., 0.];
         for i in 0..3 {
-            degs[i] = rads[i]*360./std::f64::consts::PI
-        };
+            degs[i] = rads[i] * 360. / std::f64::consts::PI
+        }
         degs
     }
 }
 
 // helper for fmt::Display
 fn sgn(x: f64) -> char {
-    if x.signum() < 0. { '-' } else { '+' }
+    if x.signum() < 0. {
+        '-'
+    } else {
+        '+'
+    }
 }
 
 // format instruction for print macro
 impl fmt::Display for Quarternion {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}{}{}i{}{}j{}{}k", self.real, sgn(self.i), self.i.abs(), sgn(self.i), self.j.abs(), sgn(self.k), self.k.abs())
+        write!(
+            f,
+            "{}{}{}i{}{}j{}{}k",
+            self.real,
+            sgn(self.i),
+            self.i.abs(),
+            sgn(self.i),
+            self.j.abs(),
+            sgn(self.k),
+            self.k.abs()
+        )
     }
 }
