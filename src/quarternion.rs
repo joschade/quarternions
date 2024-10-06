@@ -183,11 +183,7 @@ impl Quarternion {
         for i in 0..3 {
             rads[i] = rads[i] * std::f64::consts::PI/360.
         }
-        let alpha_q = Quarternion::new((rads[0]/2.).cos(), 0., 0., (rads[0]/2.).sin());
-        let beta_q = Quarternion::new((rads[1]/2.).cos(), 0., (rads[1]/2.).sin(), 0.);
-        let gamma_q = Quarternion::new((rads[2]/2.).cos(), (rads[2]/2.).sin(), 0., 0.);
-
-        alpha_q * beta_q * gamma_q
+        Quarternion::from_eulerrad(rads)
     }
 }
 
