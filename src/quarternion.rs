@@ -148,8 +148,8 @@ impl Quarternion {
         //returns Euler angles in radians. Only use with unit quarternions!
 
         if self.is_unit() {} else {
-            println!("WARNING: Make sure that a unit quarternion is used to compute angles. \
-            Length should be 1, is {}.", self.len())
+            println!("WARNING: Check whether unit quarternion is used to compute angles. \
+            Length should be 1, is {}!", self.len())
         }
         [
             (2. * (self.real * self.i + self.j * self.k))
@@ -168,6 +168,14 @@ impl Quarternion {
             degs[i] = rads[i] * 360. / std::f64::consts::PI
         }
         degs
+    }
+
+    pub fn from_eulerrad(arr: [f64; 3]) -> Quarternion {
+        let alpha_q = Quarternion::new((arr[0]/2.).cos(), 0., 0., (arr[0]/2.).sin());
+        let beta_q = Quarternion::new((arr[1]/2.).cos(), 0., (arr[1]/2.).sin(), 0.);
+        let gamma_q = Quarternion::new((arr[2]/2.).cos(), (arr[2]/2.).sin(), 0., 0.);
+
+        alpha_q * beta_q * gamma_q
     }
 }
 

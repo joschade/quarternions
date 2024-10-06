@@ -34,7 +34,8 @@ fn main() {
     println!{"{:?}", r.clone().conj().normalize().get_array()}
     println!{"{:?}", r.clone().conj().normalize().get_eulerrad()}
     println!{"{:?}", r.clone().is_unit()}
-    println!{"{:?}", r.clone().get_eulerdeg()}
+    println!{"{:?}", r.clone().normalize().get_eulerdeg()}
+    println!{"{}", Quarternion::from_eulerrad([1., 2., -2.])}
 
 
 
