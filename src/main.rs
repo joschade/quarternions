@@ -36,6 +36,7 @@ fn main() {
     println!{"{:?}", r.clone().is_unit()}
     println!{"{:?}", r.clone().normalize().get_eulerdeg()}
     println!{"{}", Quarternion::from_eulerrad([1., 2., -2.])}
+    println!{"{}", Quarternion::from_eulerdeg([180., 0., -0.])}
 
 
 
