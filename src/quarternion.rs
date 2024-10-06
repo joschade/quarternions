@@ -144,6 +144,7 @@ impl Quarternion {
             true
         }
     }
+
     pub fn get_eulerrad(&self) -> [f64; 3] {
         //returns Euler angles in radians. Only use with unit quarternions!
 
@@ -171,9 +172,9 @@ impl Quarternion {
     }
 
     pub fn from_eulerrad(arr: [f64; 3]) -> Quarternion {
-        let alpha_q = Quarternion::new((arr[0]/2.).cos(), 0., 0., (arr[0]/2.).sin());
-        let beta_q = Quarternion::new((arr[1]/2.).cos(), 0., (arr[1]/2.).sin(), 0.);
-        let gamma_q = Quarternion::new((arr[2]/2.).cos(), (arr[2]/2.).sin(), 0., 0.);
+        let alpha_q = Quarternion::new((arr[0] / 2.).cos(), 0., 0., (arr[0] / 2.).sin());
+        let beta_q = Quarternion::new((arr[1] / 2.).cos(), 0., (arr[1] / 2.).sin(), 0.);
+        let gamma_q = Quarternion::new((arr[2] / 2.).cos(), (arr[2] / 2.).sin(), 0., 0.);
 
         alpha_q * beta_q * gamma_q
     }
@@ -181,7 +182,7 @@ impl Quarternion {
     pub fn from_eulerdeg(arr: [f64; 3]) -> Quarternion {
         let mut rads = arr.clone();
         for i in 0..3 {
-            rads[i] = rads[i] * std::f64::consts::PI/360.
+            rads[i] = rads[i] * std::f64::consts::PI / 360.
         }
         Quarternion::from_eulerrad(rads)
     }
