@@ -1,7 +1,7 @@
 use std::fmt;
 use std::ops::{Add, Div, Mul, Neg, Sub};
 
-#[derive(Clone)]
+#[derive(Copy, Clone)]
 pub struct Quarternion {
     pub real: f64,
     pub i: f64,
@@ -74,7 +74,7 @@ impl Quarternion {
         }
     }
 
-    pub fn conj(self) -> Quarternion {
+    pub fn conj(&self) -> Quarternion {
         Quarternion {
             real: self.real,
             i: -self.i,
@@ -83,13 +83,13 @@ impl Quarternion {
         }
     }
 
-    pub fn dot(self, other: Quarternion) -> f64 {
-        (self * other.conj()).real
+    pub fn dot(&self, other: &Quarternion) -> f64 {
+        (*self * other.conj()).real
     }
 
     // norm in this context means squared length
-    pub fn norm(self) -> f64 {
-        self.clone().dot(self.clone())
+    pub fn norm(&self) -> f64 {
+        self.dot(self)
     }
 
     pub fn len(&self) -> f64 {
@@ -123,14 +123,14 @@ impl Quarternion {
         }
     }
 
-    pub fn inv(self) -> Quarternion {
-        let norm = self.clone().norm();
+    pub fn inv(&self) -> Quarternion {
+        let norm = self.norm();
 
         Quarternion::scalar_mult(self.conj(), 1. / norm)
     }
 
-    pub fn normalize(self) -> Quarternion {
-        self.clone().scalar_mult(1. / self.len())
+    pub fn normalize(&self) -> Quarternion {
+        self.scalar_mult(1. / self.len())
     }
 
     pub fn get_array(&self) -> [f64; 4] {
@@ -148,9 +148,13 @@ impl Quarternion {
     pub fn get_eulerrad(&self) -> [f64; 3] {
         //returns Euler angles in radians. Only use with unit quarternions!
 
-        if self.is_unit() {} else {
-            println!("WARNING: Check whether unit quarternion is used to compute angles. \
-            Length should be 1, is {}!", self.len())
+        if self.is_unit() {
+        } else {
+            println!(
+                "WARNING: Check whether unit quarternion is used to compute angles. \
+            Length should be 1, is {}!",
+                self.len()
+            )
         }
         [
             (2. * (self.real * self.i + self.j * self.k))
