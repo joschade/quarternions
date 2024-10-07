@@ -145,13 +145,11 @@ impl Quarternion {
     }
 
     pub fn inv(&self) -> Quarternion {
-        let norm = self.norm();
-
-        Quarternion::scalar_mult(self.conj(), 1. / norm)
+        self.conj()/self.norm()
     }
 
     pub fn normalize(&self) -> Quarternion {
-        self.scalar_mult(1. / self.len())
+        (*self)/self.len()
     }
 
     pub fn get_array(&self) -> [f64; 4] {
