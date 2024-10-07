@@ -25,7 +25,6 @@ fn main() {
     println!("{}", p.clone().dot(&p));
     println!("should yield 1: {}", Quarternion::id());
     println!("should yield 0: {}", Quarternion::zero());
-    println!("{}", q.clone().scalar_mult(4.0));
     println!("{}", q.clone().inv());
 
 

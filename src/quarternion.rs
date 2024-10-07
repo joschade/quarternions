@@ -135,15 +135,6 @@ impl Quarternion {
         }
     }
 
-    pub fn scalar_mult(self, x: f64) -> Quarternion {
-        Quarternion {
-            real: self.real * x,
-            i: self.i * x,
-            j: self.j * x,
-            k: self.k * x,
-        }
-    }
-
     pub fn inv(&self) -> Quarternion {
         self.conj()/self.norm()
     }
