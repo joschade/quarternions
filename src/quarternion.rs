@@ -56,11 +56,32 @@ impl Mul for Quarternion {
     }
 }
 
+impl Mul<f64> for Quarternion {
+    type Output = Self;
+
+    fn mul(self, other: f64) -> Self {
+        Self {
+            real: self.real * other,
+            i: self.i * other,
+            j: self.j * other,
+            k: self.k * other,
+        }
+    }
+}
+
 impl Div for Quarternion {
     type Output = Self;
 
     fn div(self, other: Self) -> Self {
         self * other.inv()
+    }
+}
+
+impl Div<f64> for Quarternion {
+    type Output = Self;
+
+    fn div(self, other: f64) -> Self {
+        self * (1./other)
     }
 }
 

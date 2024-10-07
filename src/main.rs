@@ -28,6 +28,7 @@ fn main() {
     println!("{}", q.clone().scalar_mult(4.0));
     println!("{}", q.clone().inv());
 
+
     let r = Quarternion::new(2.0, 0.0, -7., 3.0);
 
     println! {"{}", r.clone().conj().normalize()}
@@ -37,5 +38,6 @@ fn main() {
     println! {"{:?}", r.clone().normalize().get_eulerdeg()}
     println! {"{}", Quarternion::from_eulerrad([1., 2., -2.])}
     println! {"{}", q.conj()}
+    println!("{}", Quarternion::new(1., 1., 1., 1.)/7.);
 
 }
