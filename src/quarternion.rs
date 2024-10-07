@@ -138,7 +138,7 @@ impl Quarternion {
     }
 
     pub fn is_unit(&self) -> bool {
-        if (self.len() != 1.0) {
+        if self.len() != 1.0 {
             return false;
         } else {
             true
